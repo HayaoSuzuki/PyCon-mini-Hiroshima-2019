@@ -1,0 +1,200 @@
+\documentclass[dvipdfmx,11pt,notheorems]{beamer}
+%%%% 和文用 %%%%%
+\usepackage{bxdpx-beamer}
+\usepackage{pxjahyper}
+\usepackage{minijs}%和文用
+\renewcommand{\kanjifamilydefault}{\gtdefault}%和文用
+
+%%%% スライドの見た目 %%%%%
+\usetheme{Madrid}
+\usefonttheme{professionalfonts}
+\setbeamertemplate{frametitle}[default][center]
+\setbeamertemplate{navigation symbols}{}
+\setbeamercovered{transparent}%好みに応じてどうぞ）
+%\setbeamertemplate{footline}[page number]
+%\setbeamerfont{footline}{size=\normalsize,series=\bfseries}
+%\setbeamercolor{footline}{fg=black,bg=black}
+%%%%
+
+%%%% 定義環境 %%%%%
+\usepackage{amsmath,amssymb}
+\usepackage{amsthm}
+\theoremstyle{definition}
+\newtheorem{theorem}{定理}
+\newtheorem{definition}{定義}
+\newtheorem{proposition}{命題}
+\newtheorem{lemma}{補題}
+\newtheorem{corollary}{系}
+\newtheorem{conjecture}{予想}
+\newtheorem*{remark}{Remark}
+\renewcommand{\proofname}{}
+%%%%%%%%%
+
+%%%%% フォント基本設定 %%%%%
+\usepackage[T1]{fontenc}%8bit フォント
+\usepackage{textcomp}%欧文フォントの追加
+\usepackage[utf8]{inputenc}%文字コードをUTF-8
+\usepackage{otf}%otfパッケージ
+\usepackage{lxfonts}%数式・英文ローマン体を Lxfont にする
+\usepackage{bm}%数式太字
+%%%%%%%%%%
+ 
+\title[Number Theory with Python]{Pythonで楽しむ初等整数論}
+\author[Hayao]{Hayao Suzuki}
+\institute[Hiroshima 2019]{PyCon mini Hiroshima 2019}
+\date{October 12, 2019}
+
+\begin{document}
+
+\begin{frame}[plain]\frametitle{}
+\titlepage %表紙
+\end{frame}
+
+\begin{frame}\frametitle{Contents}
+\tableofcontents %目次
+\end{frame}
+
+\section{自己紹介}
+
+\begin{frame}\frametitle{自己紹介}
+
+\begin{block}{お前誰よ}
+\begin{description}
+\item[名前] Hayao Suzuki（鈴木　駿）
+\item[Twitter] @CardinalXaro
+\item[ブログ] \url{https://xaro.hatenablog.jp/}
+\item[専門] 数学 (組合せ論・グラフ理論)
+\item[学位] 修士（工学）、電気通信大学
+\item[仕事] 株式会社アイリッジでPythonプログラマをしている
+\end{description}
+\end{block}
+
+\end{frame}
+
+\begin{frame}\frametitle{自己紹介}
+
+\begin{block}{技術書の査読}
+\begin{itemize}
+\item 『Effective Python』（オライリージャパン）など
+\item \url{https://xaro.hatenablog.jp/}に一覧あります。
+\end{itemize}
+\end{block}
+
+\begin{block}{いろんな発表}
+\begin{itemize}
+\item 「SymPyによる数式処理」（PyCon JP 2018）など
+\item \url{https://xaro.hatenablog.jp/}に一覧あります。
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+\section{初等整数論とは}
+
+\begin{frame}\frametitle{初等整数論とは}
+
+\begin{block}{整数論とは}
+数の性質に関する数学の一分野
+\end{block}
+
+\begin{block}{初等整数論とは}
+代数的な手法や解析的な手法を使わない数論
+\end{block}
+
+\begin{alertblock}{初等だから簡単ですね？よかった！}
+初等とは予備知識がいらないという意味であり決して簡単ではありません。
+\end{alertblock}
+
+\end{frame}
+
+
+\section{ピタゴラス数}
+
+\begin{frame}\frametitle{ピタゴラスの定理}
+
+\begin{theorem}[Pythagoras]
+直角三角形の斜辺の長さを$c$とし、それ以外の辺の長さを$a, b$とする。
+そのとき、
+\begin{equation*}
+a^{2} + b^{2} = c^{2}
+\end{equation*}
+ が成り立つ。
+\end{theorem}
+
+\end{frame}
+
+\begin{frame}\frametitle{ピタゴラス数}
+
+\begin{definition}[Pythagorean Triple]
+$a^{2} + b^{2} = c^{2}$が成り立つ自然数の組$(a, b, c)$をピタゴラス数と呼ぶ。
+\end{definition}
+
+\end{frame}
+
+\begin{frame}\frametitle{原始ピタゴラス数}
+
+\begin{proposition}[ピタゴラス数からピタゴラス数を作る]
+自然数の組$(a, b, c)$がピタゴラス数ならば、
+任意の自然数$n$に対して$(na, nb, nc)$もまたピタゴラス数である。
+%\begin{proof}[証明]
+%$a^{2} + b^{2} = c^{2} \Rightarrow n^{2} (a^{2} + b^{2}) = n^{2}c^{2}$
+%\end{proof}
+\end{proposition}
+
+\begin{definition}[Primitive Pythagorean Triple]
+互いに素であるピタゴラス数を原始ピタゴラス数と呼ぶ。
+\end{definition}
+
+\end{frame}
+
+\section{素数が無限個あることの証明}
+
+\begin{frame}\frametitle{素数は無限個ある}
+
+\begin{theorem}[Euclid]
+素数は無限に存在する。
+\end{theorem}
+
+\begin{proof}[証明]
+
+素数は有限個あると仮定し、それを$p_{1}, p_{2}, \dots,  p_{n}$とする。
+また、$P = \displaystyle \prod^{n}_{i=1}p_{i} + 1$とする。
+このとき、$P$は素数が合成数のいずれかである。
+$P$が素数の場合、定義から$P$は$p_{1}, p_{2}, \dots,  p_{n}$のいずれよりも大きい素数である。
+$P$が合成数である場合、ある素数$q$で割り切れるが、
+$P$の定義から$P$は$p_{1}, p_{2}, \dots,  p_{n}$で割り切れるので$P+1$を割り切ることができない。
+よって$q$は$p_{1}, p_{2}, \dots,  p_{n}$とは異なる素数である。
+よって、$P$が素数、合成数のいずれであっても$p_{1}, p_{2}, \dots,  p_{n}$とは異なる新たなる素数が得られる。
+以上より、素数は無限に存在する。
+\end{proof}
+
+\end{frame}
+
+\section{ピタゴラス数ふたたび}
+
+\begin{frame}\frametitle{ピタゴラス数（復習）}
+
+\begin{definition}[Pythagorean Triple]
+$a^{2} + b^{2} = c^{2}$が成り立つ自然数の組$(a, b, c)$をピタゴラス数と呼ぶ。
+\end{definition}
+
+\end{frame}
+
+\section{Dirichletの算術級数定理}
+
+\begin{frame}\frametitle{Dirichletの算術級数定理}
+
+\begin{theorem}[Dirichlet]
+$a,b$を互いに素な数とする。
+そのとき、任意の自然数$n$に対して$an + b$と表せる素数は無限に存在する。
+\end{theorem}
+
+\begin{proof}[Dirichletの算術級数定理の証明]
+複素函数論を勉強しよう！
+\end{proof}
+
+\end{frame}
+
+\section{まとめ}
+
+\end{document}
