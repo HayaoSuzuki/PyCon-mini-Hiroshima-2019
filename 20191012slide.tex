@@ -38,6 +38,10 @@
 \usepackage{lxfonts}%数式・英文ローマン体を Lxfont にする
 \usepackage{bm}%数式太字
 %%%%%%%%%%
+
+%%%%% PythonTeX %%%%%
+\usepackage[makestderr]{pythontex}
+\restartpythontexsession{\thesection}
  
 \title[Number Theory with Python]{Pythonで楽しむ初等整数論}
 \author[Hayao]{Hayao Suzuki}
@@ -145,6 +149,35 @@ $a^{2} + b^{2} = c^{2}$が成り立つ自然数の組$(a, b, c)$をピタゴラ�
 
 \end{frame}
 
+\begin{frame}[fragile]\frametitle{ピタゴラス数を計算しよう：根性編}
+
+\begin{block}{根性で計算だ！}
+\begin{pyverbatim}
+from itertools import product
+
+for a, b, c in product(range(1, 20), repeat=3):
+    if a ** 2 + b ** 2 == c ** 2:
+        print(a, b, c)
+\end{pyverbatim}
+\end{block}
+
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{ピタゴラス数を計算しよう：根性編}
+
+\begin{block}{根性で計算したぞ！}
+\begin{pycode}
+from itertools import product
+
+for a, b, c in product(range(1, 20), repeat=3):
+    if a ** 2 + b ** 2 == c ** 2:
+        print(a, b, c)
+        print("\n")
+\end{pycode}
+\end{block}
+
+\end{frame}
+
 \begin{frame}\frametitle{原始ピタゴラス数}
 
 \begin{proposition}[ピタゴラス数からピタゴラス数を作る]
@@ -160,6 +193,99 @@ $a^{2} + b^{2} = c^{2}$が成り立つ自然数の組$(a, b, c)$をピタゴラ�
 \end{definition}
 
 \end{frame}
+
+\begin{frame}[fragile]\frametitle{原始ピタゴラス数を計算しよう}
+
+\begin{block}{ちょっと工夫した}
+\begin{pyverbatim}
+from itertools import combinations
+from math import gcd
+
+for a, b, c in combinations(range(1, 50), 3):
+    if a ** 2 + b ** 2 == c ** 2 and gcd(a, b) == 1:
+        print(a, b, c)
+\end{pyverbatim}
+\end{block}
+
+\begin{block}{ちょっと工夫した}
+\begin{itemize}
+\item $a,b,c$はそれぞれ違う数である
+\item $a,b$は互いに素である
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{原始ピタゴラス数を計算しよう}
+
+\begin{block}{原始ピタゴラス数の計算}
+\begin{pycode}
+from itertools import combinations
+from math import gcd
+
+for a, b, c in combinations(range(1, 50), 3):
+    if a ** 2 + b ** 2 == c ** 2 and gcd(a, b) == 1:
+        print(a, b, c)
+        print("\n")
+\end{pycode}
+\end{block}
+
+\end{frame}
+
+
+\begin{frame}\frametitle{原始ピタゴラス数をもっと上手く計算しよう}
+
+\begin{proposition}
+互いに素な奇数$s, t (s > t)$対して、 $a = st, b = \displaystyle \frac{s^{2}-t^{2}}{2}, c = \displaystyle \frac{s^{2}+t^{2}}{2}$は原始ピタゴラス数となる。
+\end{proposition}
+
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{原始ピタゴラス数をもっと上手く計算しよう}
+
+\begin{block}{上手く工夫した}
+\begin{pyverbatim}
+from itertools import count, combinations
+from math import gcd
+
+for t, s in filter(
+    lambda x: gcd(*x) == 1,
+    combinations(range(1, 10, 2), r=2),
+):
+    print(
+        s * t,
+        int((s ** 2 - t ** 2) / 2),
+        int((s ** 2 + t ** 2) / 2),
+    )
+\end{pyverbatim}
+\end{block}
+
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{原始ピタゴラス数をもっと上手く計算しよう}
+
+\begin{block}{原始ピタゴラス数をもっと上手く計算した}
+\begin{pycode}
+from itertools import count, combinations
+from math import gcd
+
+for t, s in filter(
+    lambda x: gcd(*x) == 1,
+    combinations(range(1, 10, 2), r=2),
+):
+    print(
+        s * t,
+        int((s ** 2 - t ** 2) / 2),
+        int((s ** 2 + t ** 2) / 2),
+    )
+    print("\n")
+\end{pycode}
+\end{block}
+
+\end{frame}
+
+
+
 
 \section{素数が無限個あることの証明}
 
