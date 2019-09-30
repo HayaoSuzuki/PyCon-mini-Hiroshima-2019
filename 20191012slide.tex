@@ -178,7 +178,7 @@ for a, b, c in product(range(1, 20), repeat=3):
 
 \end{frame}
 
-\begin{frame}\frametitle{原始ピタゴラス数}
+\begin{frame}\frametitle{既約ピタゴラス数}
 
 \begin{proposition}[ピタゴラス数からピタゴラス数を作る]
 自然数の組$(a, b, c)$がピタゴラス数ならば、
@@ -189,12 +189,12 @@ for a, b, c in product(range(1, 20), repeat=3):
 \end{proposition}
 
 \begin{definition}[Primitive Pythagorean Triple]
-互いに素であるピタゴラス数を原始ピタゴラス数と呼ぶ。
+互いに素であるピタゴラス数を既約ピタゴラス数と呼ぶ。
 \end{definition}
 
 \end{frame}
 
-\begin{frame}[fragile]\frametitle{原始ピタゴラス数を計算しよう}
+\begin{frame}[fragile]\frametitle{既約ピタゴラス数を計算しよう}
 
 \begin{block}{ちょっと工夫した}
 \begin{pyverbatim}
@@ -216,9 +216,9 @@ for a, b, c in combinations(range(1, 50), 3):
 
 \end{frame}
 
-\begin{frame}[fragile]\frametitle{原始ピタゴラス数を計算しよう}
+\begin{frame}[fragile]\frametitle{既約ピタゴラス数を計算しよう}
 
-\begin{block}{原始ピタゴラス数の計算}
+\begin{block}{既約ピタゴラス数の計算}
 \begin{pycode}
 from itertools import combinations
 from math import gcd
@@ -233,15 +233,93 @@ for a, b, c in combinations(range(1, 50), 3):
 \end{frame}
 
 
-\begin{frame}\frametitle{原始ピタゴラス数をもっと上手く計算しよう}
+\begin{frame}\frametitle{既約ピタゴラス数をもっと上手く計算しよう}
 
-\begin{proposition}
-互いに素な奇数$s, t (s > t)$対して、 $a = st, b = \displaystyle \frac{s^{2}-t^{2}}{2}, c = \displaystyle \frac{s^{2}+t^{2}}{2}$は原始ピタゴラス数となる。
-\end{proposition}
+\begin{lemma}
+既約ピタゴラス数$(a, b, c)$の$a, b$の一方は偶数でもう一方は奇数である。
+また、$c$は常に奇数である。
+\end{lemma}
+
+\begin{proof}[証明]
+自然数の組$(a, b, c)$を既約ピタゴラス数とする。
+
+まず、$a, b$が共に偶数ならば、ピタゴラス数の定義から$c$も偶数となり、$(a, b, c)$は共通因数2を持つことになり仮定に反する。
+次に、$a, b$が共に奇数ならば、ピタゴラス数の定義から$c$は偶数となる。
+このとき、$a = 2x + 1, b = 2y + 1, c = 2z$とすると
+\begin{equation*}
+a^{2} + b^{2} = c^{2} \Rightarrow 2(x^{2} + x + y^{2} + y) + 1 = 2z^{2}
+\end{equation*}
+となり矛盾。
+
+よって、$a, b$の内、一方は偶数でもう一方は奇数である。
+また、ピタゴラス数の定義から$c$は奇数となる。
+\end{proof}
 
 \end{frame}
 
-\begin{frame}[fragile]\frametitle{原始ピタゴラス数をもっと上手く計算しよう}
+\begin{frame}\frametitle{既約ピタゴラス数をもっと上手く計算しよう}
+\begin{lemma}
+既約ピタゴラス数$(a, b, c)$において、$a$を奇数、$b$を偶数とする。
+このとき、$(c-b)(c+b)$は互いに素である。
+\end{lemma}
+
+\begin{proof}[証明]
+自然数の組$(a, b, c)$を既約ピタゴラス数とし、$a$を奇数、$b$を偶数とする。
+仮定から、$a^{2} = c^{2} -b^{2} = (c-b)(c+b)$とできる。
+$c-b, c+b$の共通因数を$d$とすると、$d$は$(c+b)+(c-b)=2c, (c+b)-(c-b)=2b$も割り切る。
+仮定から$b, c$は既約なので$d$は1または2である。
+しかし、$(c-b)(c+b)=a^{2}$であり、$a$は奇数なので$d$は1に他ならない。
+
+\end{proof}
+
+\end{frame}
+
+\begin{frame}\frametitle{既約ピタゴラス数をもっと上手く計算しよう}
+\begin{lemma}
+既約ピタゴラス数$(a, b, c)$において、$a$を奇数、$b$を偶数とする。
+このとき、$c-b, c+b$はそれぞれ平方数となる。
+\end{lemma}
+
+\begin{proof}[証明]
+自然数の組$(a, b, c)$を既約ピタゴラス数とし、$a$を奇数、$b$を偶数とする。
+仮定から、$a^{2} = c^{2} -b^{2} = (c-b)(c+b)$とできる。
+$c-b, c+b$は互いに素であり、かつ$(c-b)(c+b)=a^{2}$なので、$(c-b)(c+b)$は平方数となる。
+よって、$c-b, c+b$がそれぞれ平方数となる。
+\end{proof}
+
+\end{frame}
+
+
+\begin{frame}\frametitle{既約ピタゴラス数をもっと上手く計算しよう}
+
+\begin{proposition}
+互いに素な奇数$s, t (s > t)$対して、 $a = st, b = \displaystyle \frac{s^{2}-t^{2}}{2}, c = \displaystyle \frac{s^{2}+t^{2}}{2}$は既約ピタゴラス数となる。
+\end{proposition}
+
+\begin{proof}[証明]
+自然数の組$(a, b, c)$を既約ピタゴラス数とし、$a$を奇数、$b$を偶数とする。
+仮定から、$a^{2} = c^{2} -b^{2} = (c-b)(c+b)$とできる。
+$c-b, c+b$はそれぞれ平方数なので、$c+b=s^{2}, c-b=t^{2}$とできる。
+よって、
+\begin{equation*}
+c = \frac{s^{2} + t^{2}}{2}, b = \frac{s^{2} - t^{2}}{2}
+\end{equation*}
+となる。
+また、
+\begin{equation*}
+a = \sqrt{(c-b)(c+b)} = st
+\end{equation*}
+となる。
+\end{proof}
+
+\end{frame}
+
+\begin{frame}\frametitle{お待たせしました}
+\huge{やることが...やることが多い...!!}
+\end{frame}
+
+
+\begin{frame}[fragile]\frametitle{既約ピタゴラス数をもっと上手く計算しよう}
 
 \begin{block}{上手く工夫した}
 \begin{pyverbatim}
@@ -262,9 +340,9 @@ for t, s in filter(
 
 \end{frame}
 
-\begin{frame}[fragile]\frametitle{原始ピタゴラス数をもっと上手く計算しよう}
+\begin{frame}[fragile]\frametitle{既約ピタゴラス数をもっと上手く計算しよう}
 
-\begin{block}{原始ピタゴラス数をもっと上手く計算した}
+\begin{block}{既約ピタゴラス数をもっと上手く計算した}
 \begin{pycode}
 from itertools import combinations
 from math import gcd
