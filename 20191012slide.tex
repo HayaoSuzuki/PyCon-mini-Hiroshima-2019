@@ -128,6 +128,10 @@
 
 \section{ピタゴラス数}
 
+\begin{frame}\frametitle{Pythonで楽しむ初等整数論}
+\huge{定理の結果をPythonでプログラミングしてみよう}
+\end{frame}
+
 \begin{frame}\frametitle{ピタゴラスの定理}
 
 \begin{theorem}[Pythagoras]
@@ -362,10 +366,34 @@ for t, s in filter(
 
 \end{frame}
 
+\begin{frame}\frametitle{Pythonで楽しむ初等整数論}
 
+\begin{block}{定理の結果をPythonでプログラミングしてみよう}
+\begin{itemize}
+\item 結果をそのまま実装して具体例を観察する
+\item 意外な法則が見つかる、かもしれない
+\end{itemize}
+\end{block}
 
+\end{frame}
 
 \section{素数が無限個あることの証明}
+
+\begin{frame}\frametitle{Pythonで楽しむ初等整数論}
+\huge{定理の証明からPythonでプログラミングしてみよう}
+\end{frame}
+
+\begin{frame}\frametitle{素数は無限個ある}
+
+\begin{theorem}[Euclid]
+素数は無限に存在する。
+\end{theorem}
+
+\begin{alertblock}{定理の結果からプログラミングできるか？}
+ちょっときびしいですね...
+\end{alertblock}
+
+\end{frame}
 
 \begin{frame}\frametitle{素数は無限個ある}
 
@@ -387,6 +415,64 @@ $P$の定義から$P$は$p_{1}, p_{2}, \dots,  p_{n}$で割り切れるので$P+
 \end{proof}
 
 \end{frame}
+
+\begin{frame}\frametitle{証明からアルゴリズムを作る}
+
+\begin{block}{証明のポイント}
+\begin{itemize}
+\item 素数のリスト$\{p_{i}\}$から$P = \displaystyle \prod^{n}_{i=1}p_{i} + 1$を計算する
+\item $P$が素数ならば、素数リストに新たに加える
+\item $P$が合成数ならば素因数分解して素数を手に入れる（既存の素数リストには存在しない）
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{証明からアルゴリズムを作る}
+
+\begin{block}{素数から素数をつくる}
+\begin{pyverbatim}
+from sympy import prod
+from sympy.ntheory import factorint, isprime
+
+primes = [2]
+
+for _ in range(10):
+    P = prod(primes) + 1
+    if isprime(P):
+        primes.append(P)
+    else:
+        new_prime = min(set(factorint(P, multiple=True)))
+        primes.append(new_prime)
+print(primes)
+\end{pyverbatim}
+\end{block}
+
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{証明からアルゴリズムを作る}
+
+\begin{block}{素数から素数をつくる}
+\begin{pycode}
+from sympy import prod
+from sympy.ntheory import factorint, isprime
+
+primes = [2]
+
+for _ in range(10):
+    P = prod(primes) + 1
+    if isprime(P):
+        primes.append(P)
+    else:
+        new_prime = min(set(factorint(P, multiple=True)))
+        primes.append(new_prime)
+print(primes)
+\end{pycode}
+\end{block}
+
+\end{frame}
+
+
 
 \section{ピタゴラス数ふたたび}
 
