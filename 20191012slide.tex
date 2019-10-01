@@ -113,6 +113,18 @@
 
 \begin{frame}\frametitle{今日の発表}
 
+\begin{block}{なぜPythonを使うのか}
+\begin{itemize}
+\item 比較的素直にプログラミングできる
+\item 標準ライブラリも外部ライブラリも豊富にある
+\item Guido van Rossum氏はアムステルダム大学で数学と計算機科学を専攻していた
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+\begin{frame}\frametitle{今日の発表}
+
 \begin{block}{Pythonで楽しむ初等整数論}
 \begin{itemize}
 \item 定理の結果をPythonでプログラミングしてみよう
@@ -147,7 +159,7 @@ a^{2} + b^{2} = c^{2}
 
 \begin{frame}\frametitle{ピタゴラス数}
 
-\begin{definition}[Pythagorean Triple]
+\begin{definition}[ピタゴラス数]
 $a^{2} + b^{2} = c^{2}$が成り立つ自然数の組$(a, b, c)$をピタゴラス数と呼ぶ。
 \end{definition}
 
@@ -187,12 +199,15 @@ for a, b, c in product(range(1, 20), repeat=3):
 \begin{proposition}[ピタゴラス数からピタゴラス数を作る]
 自然数の組$(a, b, c)$がピタゴラス数ならば、
 任意の自然数$n$に対して$(na, nb, nc)$もまたピタゴラス数である。
-%\begin{proof}[証明]
-%$a^{2} + b^{2} = c^{2} \Rightarrow n^{2} (a^{2} + b^{2}) = n^{2}c^{2}$
-%\end{proof}
 \end{proposition}
 
-\begin{definition}[Primitive Pythagorean Triple]
+\begin{proof}[証明]
+\begin{equation*}
+(na)^{2} + (nb)^{2} = n^{2} (a^{2} + b^{2}) = (nc)^{2}.
+\end{equation*}
+\end{proof}
+
+\begin{definition}[既約ピタゴラス数]
 互いに素であるピタゴラス数を既約ピタゴラス数と呼ぶ。
 \end{definition}
 
@@ -318,9 +333,9 @@ a = \sqrt{(c-b)(c+b)} = st
 
 \end{frame}
 
-\begin{frame}\frametitle{お待たせしました}
-\huge{やることが...やることが多い...!!}
-\end{frame}
+%\begin{frame}\frametitle{お待たせしました}
+%\huge{やることが...やることが多い...!!}
+%\end{frame}
 
 
 \begin{frame}[fragile]\frametitle{既約ピタゴラス数をもっと上手く計算しよう}
@@ -371,7 +386,7 @@ for t, s in filter(
 \begin{block}{定理の結果をPythonでプログラミングしてみよう}
 \begin{itemize}
 \item 結果をそのまま実装して具体例を観察する
-\item 意外な法則が見つかる、かもしれない
+\item 意外な法則が見つかる（かも）
 \end{itemize}
 \end{block}
 
@@ -389,17 +404,17 @@ for t, s in filter(
 素数は無限に存在する。
 \end{theorem}
 
-\begin{alertblock}{定理の結果からプログラミングできるか？}
-ちょっときびしいですね...
-\end{alertblock}
+%\begin{alertblock}{定理の結果からプログラミングできるか？}
+%ちょっときびしいですね...
+%\end{alertblock}
 
 \end{frame}
 
-\begin{frame}\frametitle{素数は無限個ある}
+\begin{frame}\frametitle{素数は無限個存在する。}
 
-\begin{theorem}[Euclid]
-素数は無限に存在する。
-\end{theorem}
+%\begin{theorem}[Euclid]
+%素数は無限に存在する。
+%\end{theorem}
 
 \begin{proof}[証明]
 
@@ -472,15 +487,84 @@ print(primes)
 
 \end{frame}
 
+\begin{frame}\frametitle{「素数は無限個存在する」を乗り越える}
 
+\begin{theorem}
+$p \equiv 3 \pmod{4}$である素数$p$は無限に存在する。
+\end{theorem}
 
-\section{ピタゴラス数ふたたび}
+\end{frame}
 
-\begin{frame}\frametitle{ピタゴラス数（復習）}
+\begin{frame}\frametitle{$p \equiv 3 \pmod{4}$である素数$p$は無限に存在する}
 
-\begin{definition}[Pythagorean Triple]
-$a^{2} + b^{2} = c^{2}$が成り立つ自然数の組$(a, b, c)$をピタゴラス数と呼ぶ。
-\end{definition}
+%\begin{theorem}[Euclid]
+%素数は無限に存在する。
+%\end{theorem}
+
+\begin{proof}[証明]
+
+$p \equiv 3 \pmod{4}$である素数は有限個あると仮定し、それを$p_{1}, p_{2}, \dots,  p_{n}$とする。
+また、$P = 4\displaystyle \prod^{n}_{i=1}p_{i} + 3$とする。
+$P$が素数の場合、定義から$P$は$p_{1}, p_{2}, \dots,  p_{n}$のいずれよりも大きい
+$P \equiv 3 \pmod{4}$なる素数である。
+
+$P$が合成数である場合、$P = \displaystyle \prod^{m}_{i=1}q_{i}$と素因数分解できるが、
+$q_{i}$の少なくとも1つは$q \equiv 3 \pmod{4}$となる。
+もし、すべての$q_{i}$が$p \equiv 1 \pmod{4}$ならば、
+$(4n+1)(4m+1)=4(nm + nn + m) + 1$より$P \equiv 3 \pmod{4}$であるが、
+$P$の定義から明らかに$P \equiv 3 \pmod{4}$であるので矛盾する。
+
+以上より、$p \equiv 3 \pmod{4}$なる素数は無限に存在する。
+\end{proof}
+
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{証明からアルゴリズムを作る}
+
+\begin{block}{$p \equiv 3 \pmod{4}$な素数から$p \equiv 3 \pmod{4}$な素数をつくる}
+\begin{pyverbatim}
+primes = [7]
+
+for _ in range(5):
+    P = 4 * prod(primes) + 3
+    if isprime(P):
+        primes.append(P)
+    else:
+        new_prime = min(
+            p
+            for p in factorint(P, multiple=True)
+            if p % 4 == 3
+        )
+        primes.append(new_prime)
+print(primes)
+\end{pyverbatim}
+\end{block}
+
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{証明からアルゴリズムを作る}
+
+\begin{block}{$p \equiv 3 \pmod{4}$な素数から$p \equiv 3 \pmod{4}$な素数をつくる}
+\begin{pycode}
+from sympy import prod
+from sympy.ntheory import factorint, isprime
+
+primes = [7]
+
+for _ in range(5):
+    P = 4 * prod(primes) + 3
+    if isprime(P):
+        primes.append(P)
+    else:
+        new_prime = min(
+            p
+            for p in factorint(P, multiple=True)
+            if p % 4 == 3
+        )
+        primes.append(new_prime)
+print(primes)
+\end{pycode}
+\end{block}
 
 \end{frame}
 
@@ -490,19 +574,110 @@ $a^{2} + b^{2} = c^{2}$が成り立つ自然数の組$(a, b, c)$をピタゴラ�
 
 \begin{theorem}[Dirichlet]
 $a,b$を互いに素な数とする。
-そのとき、任意の自然数$n$に対して$an + b$と表せる素数は無限に存在する。
+そのとき、$p \equiv b \pmod{a}$である素数$p$は無限に存在する。
 \end{theorem}
 
-\begin{proof}[Dirichletの算術級数定理の証明]
+\begin{proof}[証明]
 複素函数論を勉強しよう！
 \end{proof}
+
+\end{frame}
+
+
+\begin{frame}\frametitle{Pythonで楽しむ初等整数論}
+
+\begin{block}{定理の証明からPythonでプログラミングしてみよう}
+\begin{itemize}
+\item 構成的な証明はプログラミングできる（こともある）
+\item プログラミングできれば証明を理解できる（かもしれない）
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+\section{ピタゴラス数ふたたび}
+
+\begin{frame}\frametitle{ピタゴラス数（復習）}
+
+\begin{definition}[ピタゴラス数]
+$a^{2} + b^{2} = c^{2}$が成り立つ自然数の組$(a, b, c)$をピタゴラス数と呼ぶ。
+\end{definition}
+
+\begin{definition}[既約ピタゴラス数]
+互いに素であるピタゴラス数を既約ピタゴラス数と呼ぶ。
+\end{definition}
+
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{既約ピタゴラス数の斜辺の性質}
+
+\begin{block}{既約ピタゴラス数の斜辺を4で割ると...?}
+\begin{pyverbatim}
+from itertools import combinations
+from math import gcd
+
+for t, s in filter(
+    lambda x: gcd(*x) == 1,
+    combinations(range(1, 10, 2), r=2),
+):
+    c = int((s ** 2 + t ** 2) / 2)
+    print(f"{c} を4で割った余りは{c % 4}")
+\end{pyverbatim}
+\end{block}
+
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{既約ピタゴラス数の斜辺の性質}
+
+\begin{block}{既約ピタゴラス数の斜辺を4で割ると...?}
+\begin{pycode}
+from itertools import combinations
+from math import gcd
+
+for t, s in filter(
+    lambda x: gcd(*x) == 1,
+    combinations(range(1, 10, 2), r=2),
+):
+    c = int((s ** 2 + t ** 2) / 2)
+    print(f"{c} を4で割った余りは{c % 4}")
+    print()
+\end{pycode}
+\end{block}
+
+\end{frame}
+
+
+\begin{frame}\frametitle{2つの平方数の和で表せる素数}
+
+\begin{theorem}[Fermatの2平方和定理]
+奇素数$p$が2つの平方数の和で表せることの必要十分条件は$p \equiv 1 \pmod{4}$である。
+\end{theorem}
+
+\begin{corollary}[Fermatの2平方和定理の系]
+自然数$c$が既約ピタゴラス数$(a,b,c)$となる必要十分条件は$c$が$p \equiv 1 \pmod{4}$な素数の積になることである。
+\end{corollary}
 
 \end{frame}
 
 \section{まとめ}
 
 \begin{frame}\frametitle{まとめ}
-いえーい
+
+\begin{block}{定理の結果をPythonでプログラミングしてみよう}
+\begin{itemize}
+\item 結果をそのまま実装して具体例を観察する
+\item 意外な法則が見つかる（かも）
+\end{itemize}
+\end{block}
+
+
+\begin{block}{定理の証明からPythonでプログラミングしてみよう}
+\begin{itemize}
+\item 構成的な証明はプログラミングできる（こともある）
+\item プログラミングできれば証明を理解できる（かもしれない）
+\end{itemize}
+\end{block}
+
 \end{frame}
 
 \end{document}
