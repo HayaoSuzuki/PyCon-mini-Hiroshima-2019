@@ -123,6 +123,14 @@
 \end{itemize}
 \end{block}
 
+\begin{block}{今回使うもの}
+\begin{itemize}
+\item Python 3.7.x
+\item SymPy（記号計算ライブラリ、数論ライブラリも豊富）
+\item Silverman『はじめての数論 原著第3版』（丸善出版）（ネタ元）
+\end{itemize}
+\end{block}
+
 \end{frame}
 
 \begin{frame}\frametitle{今日の発表}
@@ -394,210 +402,7 @@ for t, s in filter(
 
 \end{frame}
 
-\section{素数が無限個あることの証明}
-
-\begin{frame}\frametitle{Pythonで楽しむ初等整数論}
-\huge{定理の証明からPythonでプログラミングしてみよう}
-\end{frame}
-
-\begin{frame}\frametitle{素数は無限個ある}
-
-\begin{theorem}[Euclid]
-素数は無限に存在する。
-\end{theorem}
-
-%\begin{alertblock}{定理の結果からプログラミングできるか？}
-%ちょっときびしいですね...
-%\end{alertblock}
-
-\end{frame}
-
-\begin{frame}\frametitle{素数は無限個存在する。}
-
-%\begin{theorem}[Euclid]
-%素数は無限に存在する。
-%\end{theorem}
-
-\begin{proof}[証明]
-
-素数は有限個あると仮定し、それを$p_{1}, p_{2}, \dots,  p_{n}$とする。
-また、$P = \displaystyle \prod^{n}_{i=1}p_{i} + 1$とする。
-このとき、$P$は素数が合成数のいずれかである。
-$P$が素数の場合、定義から$P$は$p_{1}, p_{2}, \dots,  p_{n}$のいずれよりも大きい素数である。
-$P$が合成数である場合、ある素数$q$で割り切れるが、
-$P$の定義から$P$は$p_{1}, p_{2}, \dots,  p_{n}$で割り切れるので$P+1$を割り切ることができない。
-よって$q$は$p_{1}, p_{2}, \dots,  p_{n}$とは異なる素数である。
-よって、$P$が素数、合成数のいずれであっても$p_{1}, p_{2}, \dots,  p_{n}$とは異なる新たなる素数が得られる。
-以上より、素数は無限に存在する。
-\end{proof}
-
-\end{frame}
-
-\begin{frame}\frametitle{証明からアルゴリズムを作る}
-
-\begin{block}{証明のポイント}
-\begin{itemize}
-\item 素数のリスト$\{p_{i}\}$から$P = \displaystyle \prod^{n}_{i=1}p_{i} + 1$を計算する
-\item $P$が素数ならば、素数リストに新たに加える
-\item $P$が合成数ならば素因数分解して素数を手に入れる（既存の素数リストには存在しない）
-\end{itemize}
-\end{block}
-
-\end{frame}
-
-\begin{frame}[fragile]\frametitle{証明からアルゴリズムを作る}
-
-\begin{block}{素数から素数をつくる}
-\begin{pyverbatim}
-from sympy import prod
-from sympy.ntheory import factorint, isprime
-
-primes = [2]
-
-for _ in range(10):
-    P = prod(primes) + 1
-    if isprime(P):
-        primes.append(P)
-    else:
-        new_prime = min(set(factorint(P, multiple=True)))
-        primes.append(new_prime)
-print(primes)
-\end{pyverbatim}
-\end{block}
-
-\end{frame}
-
-\begin{frame}[fragile]\frametitle{証明からアルゴリズムを作る}
-
-\begin{block}{素数から素数をつくる}
-\begin{pycode}
-from sympy import prod
-from sympy.ntheory import factorint, isprime
-
-primes = [2]
-
-for _ in range(10):
-    P = prod(primes) + 1
-    if isprime(P):
-        primes.append(P)
-    else:
-        new_prime = min(set(factorint(P, multiple=True)))
-        primes.append(new_prime)
-print(primes)
-\end{pycode}
-\end{block}
-
-\end{frame}
-
-\begin{frame}\frametitle{「素数は無限個存在する」を乗り越える}
-
-\begin{theorem}
-$p \equiv 3 \pmod{4}$である素数$p$は無限に存在する。
-\end{theorem}
-
-\end{frame}
-
-\begin{frame}\frametitle{$p \equiv 3 \pmod{4}$である素数$p$は無限に存在する}
-
-%\begin{theorem}[Euclid]
-%素数は無限に存在する。
-%\end{theorem}
-
-\begin{proof}[証明]
-
-$p \equiv 3 \pmod{4}$である素数は有限個あると仮定し、それを$p_{1}, p_{2}, \dots,  p_{n}$とする。
-また、$P = 4\displaystyle \prod^{n}_{i=1}p_{i} + 3$とする。
-$P$が素数の場合、定義から$P$は$p_{1}, p_{2}, \dots,  p_{n}$のいずれよりも大きい
-$P \equiv 3 \pmod{4}$なる素数である。
-
-$P$が合成数である場合、$P = \displaystyle \prod^{m}_{i=1}q_{i}$と素因数分解できるが、
-$q_{i}$の少なくとも1つは$q \equiv 3 \pmod{4}$となる。
-もし、すべての$q_{i}$が$p \equiv 1 \pmod{4}$ならば、
-$(4n+1)(4m+1)=4(nm + nn + m) + 1$より$P \equiv 3 \pmod{4}$であるが、
-$P$の定義から明らかに$P \equiv 3 \pmod{4}$であるので矛盾する。
-
-以上より、$p \equiv 3 \pmod{4}$なる素数は無限に存在する。
-\end{proof}
-
-\end{frame}
-
-\begin{frame}[fragile]\frametitle{証明からアルゴリズムを作る}
-
-\begin{block}{$p \equiv 3 \pmod{4}$な素数から$p \equiv 3 \pmod{4}$な素数をつくる}
-\begin{pyverbatim}
-primes = [7]
-
-for _ in range(5):
-    P = 4 * prod(primes) + 3
-    if isprime(P):
-        primes.append(P)
-    else:
-        new_prime = min(
-            p
-            for p in factorint(P, multiple=True)
-            if p % 4 == 3
-        )
-        primes.append(new_prime)
-print(primes)
-\end{pyverbatim}
-\end{block}
-
-\end{frame}
-
-\begin{frame}[fragile]\frametitle{証明からアルゴリズムを作る}
-
-\begin{block}{$p \equiv 3 \pmod{4}$な素数から$p \equiv 3 \pmod{4}$な素数をつくる}
-\begin{pycode}
-from sympy import prod
-from sympy.ntheory import factorint, isprime
-
-primes = [7]
-
-for _ in range(5):
-    P = 4 * prod(primes) + 3
-    if isprime(P):
-        primes.append(P)
-    else:
-        new_prime = min(
-            p
-            for p in factorint(P, multiple=True)
-            if p % 4 == 3
-        )
-        primes.append(new_prime)
-print(primes)
-\end{pycode}
-\end{block}
-
-\end{frame}
-
-%\section{Dirichletの算術級数定理}
-
-\begin{frame}\frametitle{Dirichletの算術級数定理}
-
-\begin{theorem}[Dirichlet]
-$a,b$を互いに素な数とする。
-そのとき、$p \equiv b \pmod{a}$である素数$p$は無限に存在する。
-\end{theorem}
-
-\begin{proof}[証明]
-複素函数論を勉強しよう！
-\end{proof}
-
-\end{frame}
-
-
-\begin{frame}\frametitle{Pythonで楽しむ初等整数論}
-
-\begin{block}{定理の証明からPythonでプログラミングしてみよう}
-\begin{itemize}
-\item 構成的な証明はプログラミングできる（こともある）
-\item プログラミングできれば証明を理解できる（かもしれない）
-\end{itemize}
-\end{block}
-
-\end{frame}
-
-\section{ピタゴラス数ふたたび}
+\section{2つの平方数の和で表せる素数}
 
 \begin{frame}\frametitle{ピタゴラス数（復習）}
 
@@ -655,15 +460,298 @@ for t, s in filter(
 奇素数$p$が2つの平方数の和で表せることの必要十分条件は$p \equiv 1 \pmod{4}$である。
 \end{theorem}
 
-\begin{corollary}[Fermatの2平方和定理の系]
-自然数$c$が既約ピタゴラス数$(a,b,c)$となる必要十分条件は$c$が$p \equiv 1 \pmod{4}$な素数の積になることである。
-\end{corollary}
+\begin{proof}[証明$(\Rightarrow)$]
+奇素数$p$が2つの平方数の和で表せるならば、$p=x^{2}+y^{2}$となる。
+$p$は奇数なので、$x$を偶数、$y$を奇数としてよい。
+このとき、$x=2m, y=2n+1$とすると
+\begin{equation*}
+p = x^{2}+y^{2} = (2m)^{2} + (2n + 1)^{2} = 4(m^{2} + n^{2} + n) + 1
+\end{equation*}
+より、$p$は4を法として1と合同である。
+
+\end{proof}
+
+\end{frame}
+
+\begin{frame}\frametitle{証明のスケッチ}
+
+\begin{proof}[証明$(\Leftarrow)$のスケッチ]
+
+\begin{itemize}
+\item $p$を4を法として1と合同な素数とする。
+\item いい感じに$A^{2}+B^{2} = Mp$なる$(A, B, M)$を探す。
+\item $(A, B, M)$からいい感じに$a^{2}+b^{2}=mp, m \leq M-1$なる$(a, b, m)$を探す。
+\item $M$が1になるまで繰り返す。
+\end{itemize}
+
+\end{proof}
+
+\end{frame}
+
+\begin{frame}\frametitle{証明$(\Leftarrow)$のスケッチ}
+
+\begin{lemma}
+\begin{equation*}
+(u^{2} + v^{2})(A^{2}+B^{2}) = (uA+vB)^{2} + (vA-uB)^{2}
+\end{equation*}
+\end{lemma}
+
+\begin{proof}[証明]
+
+\begin{equation*} 
+\begin{split}
+&(uA+vB)^{2} + (vA-uB)^{2}  \\
+&= (u^{2}A^{2} + 2uAvB + v^{2}B^{2}) + (v^{2}A^{2}-2vAuB + u^{2}B^{2})  \\
+ &= u^{2}A^{2}+v^{2}B^{2} + v^{2}A^{2}+u^{2}B^{2} \\
+ &= (u^{2} + v^{2})(A^{2}+B^{2}).
+ \end{split}
+\end{equation*}
+
+\end{proof}
+
+\end{frame}
+
+\begin{frame}\frametitle{証明$(\Leftarrow)$のスケッチ}
+
+\begin{lemma}
+合同方程式$x^{2} \equiv -1 \pmod{p}$は解を持つ。
+\end{lemma}
+
+\begin{proof}[証明（天下り）]
+平方剰余の相互法則から導ける。
+\end{proof}
+
+\begin{exampleblock}{いい感じに$A^{2}+B^{2} = Mp$なる$(A, B, M)$を探す}
+合同方程式$x^{2} \equiv -1 \pmod{p}$の解を$A$とし、$B=1$とすると、$A^{2}+B^{2}$は$p$の倍数である。
+また、$\displaystyle M=\frac{A^{2} + B^{2}}{p}$となる。
+\end{exampleblock}
+
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{いい感じに$A^{2}+B^{2} = Mp$なる$(A, B, M)$を探す}
+
+\begin{block}{合同方程式$x^{2} \equiv -1 \pmod{p}$の解を算出する（天下り）}
+\begin{pyverbatim}
+from random import randint
+from sympy.ntheory import isprime, legendre_symbol
+
+
+def solve_quadratic(p):
+    if not (isprime(p) and p % 4 == 1):
+        raise ValueError
+    while True:
+        a = randint(1, p - 1)
+        b = pow(a, (p - 1) // 4, p)
+        if legendre_symbol(a, p) == -1 and 1 <= b < p:
+            return b
+\end{pyverbatim}
+\end{block}
+
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{いい感じに$A^{2}+B^{2} = Mp$なる$(A, B, M)$を探す}
+
+\begin{block}{いい感じに$(A, B, M)$を探す}
+\begin{pyverbatim}
+def sums_of_two_squares(p):
+    """4を法として1と合同な素数を2つの平方数の和で表す"""
+
+    if not (isprime(p) and p % 4 == 1):
+        raise ValueError
+            
+    A, B = solve_quadratic(p), 1
+    M = divmod(A ** 2 + B ** 2, p)[0]
+\end{pyverbatim}
+\end{block}
+
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{いい感じに$a^{2}+b^{2}=mp$を探す}
+
+\begin{block}{いい感じに$a^{2}+b^{2}=Mr$を探す}
+以下の条件を満たすように$a, b$を選ぶ。
+\begin{align*} 
+a &\equiv A \pmod{M} \\ 
+b &\equiv B \pmod{M} \\ 
+-\frac{1}{2}M &\leq a, b \leq \frac{1}{2}M
+\end{align*}
+\end{block}
+
+\begin{exampleblock}{$r$と$M$の関係の秘密}
+\begin{equation*}
+r = \frac{a^{2} + b^{2}}{M} \leq \frac{\left (\frac{M}{2} \right)^{2} + \left (\frac{M}{2} \right)^{2}}{M} = \frac{M}{2} < M.
+\end{equation*}
+\end{exampleblock}
+
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{いい感じに$a^{2}+b^{2}=Mr$を探す}
+
+\begin{block}{いい感じに$a^{2}+b^{2}=Mr$を探す}
+\begin{pyverbatim}
+from sympy.ntheory.modular import solve_congruence
+
+
+def sums_of_two_squares(p):
+    """4を法として1と合同な素数を2つの平方数の和で表す"""
+
+    if not (isprime(p) and p % 4 == 1):
+        raise ValueError
+                    
+    A, B = solve_quadratic(p), 1
+    M = divmod(A ** 2 + B ** 2, p)[0]
+
+    a = solve_congruence((A, M), symmetric=True)[0]
+    b = solve_congruence((B, M), symmetric=True)[0]
+    r = divmod(a ** 2 + b ** 2, M)[0]
+\end{pyverbatim}
+\end{block}
+
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{総仕上げ}
+\begin{block}{2つの方程式}
+\begin{align*}
+A^{2} + B^{2} &= Mp \\
+a^{2} + b^{2} &= Mr
+\end{align*}
+\end{block}
+
+\begin{block}{2つの方程式の関係}
+\begin{equation*} 
+\begin{split}
+            & (a^{2} + b^{2})(A^{2}+B^{2}) = M^{2}rp  \\
+\Rightarrow & (aA + bB)^{2} + (bA - aB)^{2} = M^{2}rp \\
+\Rightarrow & \left(\frac{aA + bB}{M}\right)^{2} + \left(\frac{bA - aB}{M}\right)^{2} = rp
+ \end{split}
+\end{equation*}
+\end{block}
+
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{2つの平方数の和で表せる素数}
+
+\begin{block}{2つの平方数の和で表せる素数}
+\begin{pyverbatim}
+def sums_of_two_squares(p):
+    A, B = solve_quadratic(p), 1
+    M = divmod(A ** 2 + B ** 2, p)[0]
+    while True:
+        a = solve_congruence((A, M), symmetric=True)[0]
+        b = solve_congruence((B, M), symmetric=True)[0]
+        r = divmod(u ** 2 + v ** 2, M)[0]
+
+        s = abs((a * A + b * B) // M)
+        t = abs((b * A - a * B) // M)
+        if r == 1:
+            print(f"${s}^2 + {t}^2={p}$")
+            return
+        else:
+            A, B, M = s, t, r
+\end{pyverbatim}
+\end{block}
+
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{2つの平方数の和で表せる素数}
+
+\begin{block}{2つの平方数の和で表せる素数}
+\begin{pyverbatim}
+from sympy import primerange
+
+primes_1_mod_4 = (
+    p for p in primerange(1, 100) if p % 4 == 1
+)
+
+for p in primes_1_mod_4:
+    sums_of_two_squares(p)
+\end{pyverbatim}
+\end{block}
+
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{2つの平方数の和で表せる素数}
+
+\begin{block}{2つの平方数の和で表せる素数}
+\begin{pycode}
+from random import randint
+from sympy import primerange
+from sympy.ntheory import isprime, legendre_symbol
+from sympy.ntheory.modular import solve_congruence
+
+
+def solve_quadratic(p):
+    """x^2 \equiv -1 (mod p)の解を計算する"""
+    if not (isprime(p) and p % 4 == 1):
+        raise ValueError(f"{p}は4を法として1と合同な素数である必要があります。")
+    while True:
+        a = randint(1, p - 1)
+        b = pow(a, (p - 1) // 4, p)
+        if legendre_symbol(a, p) == -1 and 1 <= b < p:
+            return b
+
+
+def sums_of_two_squares(p):
+    """4を法として1と合同な素数を2つの平方数の和で表す"""
+
+    if not (isprime(p) and p % 4 == 1):
+        raise ValueError(f"{p}は4を法として1と合同な素数である必要があります。")
+
+    A, B = solve_quadratic(p), 1
+    M = divmod(A ** 2 + B ** 2, p)[0]
+    if M == 1:
+        print(f"${A}^2 + {B}^2={p}$")
+        return
+
+    while True:
+        u = solve_congruence((A, M), symmetric=True)[0]
+        v = solve_congruence((B, M), symmetric=True)[0]
+        r = divmod(u ** 2 + v ** 2, M)[0]
+        s = abs((u * A + v * B) // M)
+        t = abs((v * A - u * B) // M)
+
+        if r == 1:
+            assert s ** 2 + t ** 2 == p
+            print(f"${s}^2 + {t}^2={p}$")
+            return
+        else:
+            A, B, M = s, t, r
+
+
+primes_1_mod_4 = (
+    p for p in primerange(1, 100) if p % 4 == 1
+)
+
+for p in primes_1_mod_4:
+    sums_of_two_squares(p)
+    print()
+\end{pycode}
+\end{block}
+
+\end{frame}
+
+\begin{frame}\frametitle{Pythonで楽しむ初等整数論}
+
+\begin{block}{定理の証明からPythonでプログラミングしてみよう}
+\begin{itemize}
+\item 構成的な証明はプログラミングできる（こともある）
+\item プログラミングできれば証明を理解できる（かもしれない）
+\end{itemize}
+\end{block}
 
 \end{frame}
 
 \section{まとめ}
 
 \begin{frame}\frametitle{まとめ}
+
+\begin{block}{なぜPythonを使うのか}
+\begin{itemize}
+\item 比較的素直にプログラミングできる
+\item 標準ライブラリも外部ライブラリも豊富にある
+\item 困ったらSymPyを当たれば解決することが多い
+\end{itemize}
+\end{block}
 
 \begin{block}{定理の結果をPythonでプログラミングしてみよう}
 \begin{itemize}
