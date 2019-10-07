@@ -155,24 +155,28 @@
 \huge{定理の結果をPythonでプログラミングしてみよう}
 \end{frame}
 
-\begin{frame}\frametitle{ピタゴラスの定理}
-
-\begin{theorem}[Pythagoras]
-直角三角形の斜辺の長さを$c$とし、それ以外の辺の長さを$a, b$とする。
-そのとき、
-\begin{equation*}
-a^{2} + b^{2} = c^{2}
-\end{equation*}
- が成り立つ。
-\end{theorem}
-
-\end{frame}
+%\begin{frame}\frametitle{ピタゴラスの定理}
+%
+%\begin{theorem}[Pythagoras]
+%直角三角形の斜辺の長さを$c$とし、それ以外の辺の長さを$a, b$とする。
+%そのとき、
+%\begin{equation*}
+%a^{2} + b^{2} = c^{2}
+%\end{equation*}
+% が成り立つ。
+%\end{theorem}
+%
+%\end{frame}
 
 \begin{frame}\frametitle{ピタゴラス数}
 
 \begin{definition}[ピタゴラス数]
 $a^{2} + b^{2} = c^{2}$が成り立つ自然数の組$(a, b, c)$をピタゴラス数と呼ぶ。
 \end{definition}
+
+\begin{block}{目標}
+ピタゴラス数を重複なく、もれなく計算したい。
+\end{block}
 
 \end{frame}
 
@@ -203,24 +207,38 @@ for a, b, c in product(range(1, 20), repeat=3):
 \end{pycode}
 \end{block}
 
+重複がたくさんあるし、もれがあるかもしれない。
+
 \end{frame}
 
 \begin{frame}\frametitle{既約ピタゴラス数}
 
-\begin{proposition}[ピタゴラス数からピタゴラス数を作る]
-自然数の組$(a, b, c)$がピタゴラス数ならば、
-任意の自然数$n$に対して$(na, nb, nc)$もまたピタゴラス数である。
-\end{proposition}
-
-\begin{proof}[証明]
-\begin{equation*}
-(na)^{2} + (nb)^{2} = n^{2} (a^{2} + b^{2}) = (nc)^{2}.
-\end{equation*}
-\end{proof}
-
 \begin{definition}[既約ピタゴラス数]
 互いに素であるピタゴラス数を既約ピタゴラス数と呼ぶ。
 \end{definition}
+
+\begin{exampleblock}{既約ピタゴラス数だけを生成すれば他のピタゴラス数は作れる！}
+ピタゴラス数$(3, 4, 5)$から別のピタゴラス数$(6, 8, 10)$を作ることができる
+\end{exampleblock}
+
+\begin{block}{次なる目標}
+既約ピタゴラス数を重複なく、もれなく計算したい。
+\end{block}
+
+%\begin{proposition}[ピタゴラス数からピタゴラス数を作る]
+%自然数の組$(a, b, c)$がピタゴラス数ならば、
+%任意の自然数$n$に対して$(na, nb, nc)$もまたピタゴラス数である。
+%\end{proposition}
+%
+%\begin{proof}[証明]
+%\begin{equation*}
+%(na)^{2} + (nb)^{2} = n^{2} (a^{2} + b^{2}) = (nc)^{2}.
+%\end{equation*}
+%\end{proof}
+%
+%\begin{definition}[既約ピタゴラス数]
+%互いに素であるピタゴラス数を既約ピタゴラス数と呼ぶ。
+%\end{definition}
 
 \end{frame}
 
@@ -260,17 +278,31 @@ for a, b, c in combinations(range(1, 50), 3):
 \end{pycode}
 \end{block}
 
+重複はなさそうだが、もれがあるかもしれない...。
+
 \end{frame}
 
 
 \begin{frame}\frametitle{既約ピタゴラス数をもっと上手く計算しよう}
 
-\begin{lemma}
+\begin{proposition}
+互いに素な奇数$s, t (s > t)$対して、 $a = st, b = \displaystyle \frac{s^{2}-t^{2}}{2}, c = \displaystyle \frac{s^{2}+t^{2}}{2}$は既約ピタゴラス数となる。
+\end{proposition}
+
+\begin{exampleblock}{つまり...}
+互いに素な奇数のペア$(s, t)$が既約ピタゴラス数$(a, b, c)$に対応する。
+\end{exampleblock}
+
+\end{frame}
+
+\begin{frame}\frametitle{既約ピタゴラス数をもっと上手く計算しよう}
+
+\begin{lemma}[あとでじっくり読もう]
 既約ピタゴラス数$(a, b, c)$の$a, b$の一方は偶数でもう一方は奇数である。
 また、$c$は常に奇数である。
 \end{lemma}
 
-\begin{proof}[証明]
+\begin{proof}[証明（あとでじっくり読もう）]
 自然数の組$(a, b, c)$を既約ピタゴラス数とする。
 
 まず、$a, b$が共に偶数ならば、ピタゴラス数の定義から$c$も偶数となり、$(a, b, c)$は共通因数2を持つことになり仮定に反する。
@@ -288,12 +320,12 @@ a^{2} + b^{2} = c^{2} \Rightarrow 2(x^{2} + x + y^{2} + y) + 1 = 2z^{2}
 \end{frame}
 
 \begin{frame}\frametitle{既約ピタゴラス数をもっと上手く計算しよう}
-\begin{lemma}
+\begin{lemma}[あとでじっくり読もう]
 既約ピタゴラス数$(a, b, c)$において、$a$を奇数、$b$を偶数とする。
 このとき、$(c-b)(c+b)$は互いに素である。
 \end{lemma}
 
-\begin{proof}[証明]
+\begin{proof}[証明（あとでじっくり読もう）]
 自然数の組$(a, b, c)$を既約ピタゴラス数とし、$a$を奇数、$b$を偶数とする。
 仮定から、$a^{2} = c^{2} -b^{2} = (c-b)(c+b)$とできる。
 $c-b, c+b$の共通因数を$d$とすると、$d$は$(c+b)+(c-b)=2c, (c+b)-(c-b)=2b$も割り切る。
@@ -305,12 +337,12 @@ $c-b, c+b$の共通因数を$d$とすると、$d$は$(c+b)+(c-b)=2c, (c+b)-(c-b)
 \end{frame}
 
 \begin{frame}\frametitle{既約ピタゴラス数をもっと上手く計算しよう}
-\begin{lemma}
+\begin{lemma}[あとでじっくり読もう]
 既約ピタゴラス数$(a, b, c)$において、$a$を奇数、$b$を偶数とする。
 このとき、$c-b, c+b$はそれぞれ平方数となる。
 \end{lemma}
 
-\begin{proof}[証明]
+\begin{proof}[証明（あとでじっくり読もう）]
 自然数の組$(a, b, c)$を既約ピタゴラス数とし、$a$を奇数、$b$を偶数とする。
 仮定から、$a^{2} = c^{2} -b^{2} = (c-b)(c+b)$とできる。
 $c-b, c+b$は互いに素であり、かつ$(c-b)(c+b)=a^{2}$なので、$(c-b)(c+b)$は平方数となる。
@@ -326,7 +358,7 @@ $c-b, c+b$は互いに素であり、かつ$(c-b)(c+b)=a^{2}$なので、$(c-b)(
 互いに素な奇数$s, t (s > t)$対して、 $a = st, b = \displaystyle \frac{s^{2}-t^{2}}{2}, c = \displaystyle \frac{s^{2}+t^{2}}{2}$は既約ピタゴラス数となる。
 \end{proposition}
 
-\begin{proof}[証明]
+\begin{proof}[証明（あとでじっくり読もう）]
 自然数の組$(a, b, c)$を既約ピタゴラス数とし、$a$を奇数、$b$を偶数とする。
 仮定から、$a^{2} = c^{2} -b^{2} = (c-b)(c+b)$とできる。
 $c-b, c+b$はそれぞれ平方数なので、$c+b=s^{2}, c-b=t^{2}$とできる。
@@ -362,8 +394,8 @@ for t, s in filter(
 ):
     print(
         s * t,
-        int((s ** 2 - t ** 2) / 2),
-        int((s ** 2 + t ** 2) / 2),
+        (s ** 2 - t ** 2) // 2,
+        (s ** 2 + t ** 2) // 2,
     )
 \end{pyverbatim}
 \end{block}
@@ -383,12 +415,14 @@ for t, s in filter(
 ):
     print(
         s * t,
-        int((s ** 2 - t ** 2) / 2),
-        int((s ** 2 + t ** 2) / 2),
+        (s ** 2 - t ** 2) // 2,
+        (s ** 2 + t ** 2) // 2,
     )
     print("\n")
 \end{pycode}
 \end{block}
+
+重複なく、もれなく計算できた！
 
 \end{frame}
 
@@ -465,7 +499,19 @@ for t, s in filter(
 奇素数$p$が2つの平方数の和で表せることの必要十分条件は$p \equiv 1 \pmod{4}$である。
 \end{theorem}
 
-\begin{proof}[証明$(\Rightarrow)$]
+\begin{exampleblock}{2つの平方数の和で表せる？}
+$p=97$を例に考える。
+\begin{itemize}
+\item $97 = 9^{2} + 4^{2}$とできるので、$97 \equiv 1 \pmod{4}$である。（簡単）
+\item $97 \equiv 1 \pmod{4}$であるので、$97 = 9^{2} + 4^{2}$とできる。（不思議）
+\end{itemize}
+\end{exampleblock}
+
+\end{frame}
+
+\begin{frame}\frametitle{2つの平方数の和で表せる素数}
+
+\begin{proof}[証明$(p = x^{2}+y^{2}\Rightarrow p \equiv 1 \pmod{4})$]
 奇素数$p$が2つの平方数の和で表せるならば、$p=x^{2}+y^{2}$となる。
 $p$は奇数なので、$x$を偶数、$y$を奇数としてよい。
 このとき、$x=2m, y=2n+1$とすると
@@ -478,42 +524,33 @@ p = x^{2}+y^{2} = (2m)^{2} + (2n + 1)^{2} = 4(m^{2} + n^{2} + n) + 1
 
 \end{frame}
 
+\begin{frame}\frametitle{証明のラフスケッチ}
+
+\begin{block}{大雑把な方針}
+\begin{itemize}
+\item いきなり$x^{2} + y^{2}=p$を満たす$(x, y)$を当てるのは難しい。
+\item $x^{2} + y^{2}=Mp$を満たす$(x, y, M)$は比較的簡単に出せるので出す。
+\item $M$の値をどんどん減らして$1$にする。
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+
 \begin{frame}\frametitle{証明のスケッチ}
 
-\begin{block}{証明$(\Leftarrow)$のスケッチ}
+\begin{block}{証明$(p \equiv 1 \pmod{4} \Rightarrow p = x^{2} + y^{2})$のスケッチ}
 
-\begin{itemize}
+\begin{enumerate}
 \item $p$を4を法として1と合同な素数とする。
-\item いい感じに$A^{2}+B^{2} = Mp$なる$(A, B, M)$を探す。
-\item $(A, B, M)$からいい感じに$a^{2}+b^{2}=Mr, r \leq M-1$なる$(a, b, r)$を探す。
-\item $M$が1になるまで繰り返す。
-\end{itemize}
+\item $A^{2}+B^{2} = Mp$なる$(A, B, M)$を探す。$M=1$なら終了。 \label{step2}
+\item $(A, B, M)$から$a^{2}+b^{2}=Mr, r \leq M-1$なる$(a, b, r)$を得る。
+\item $A^{2} + B^{2} = Mp, a^{2}+b^{2}=Mr$から$u^{2} + v^{2} = rp$を得る。
+\item $A \leftarrow u, B \leftarrow v, M \leftarrow r$として\ref{step2}に戻る。
+\end{enumerate}
 
 \end{block}
 これを無限降下法と呼ぶ。
-\end{frame}
-
-\begin{frame}\frametitle{証明$(\Leftarrow)$のスケッチ}
-
-\begin{lemma}
-\begin{equation*}
-(u^{2} + v^{2})(A^{2}+B^{2}) = (uA+vB)^{2} + (vA-uB)^{2}
-\end{equation*}
-\end{lemma}
-
-\begin{proof}[証明]
-計算するだけ。
-\begin{equation*} 
-\begin{split}
-&(uA+vB)^{2} + (vA-uB)^{2}  \\
-&= (u^{2}A^{2} + 2uAvB + v^{2}B^{2}) + (v^{2}A^{2}-2vAuB + u^{2}B^{2})  \\
- &= u^{2}A^{2}+v^{2}B^{2} + v^{2}A^{2}+u^{2}B^{2} \\
- &= (u^{2} + v^{2})(A^{2}+B^{2}).
- \end{split}
-\end{equation*}
-
-\end{proof}
-
 \end{frame}
 
 \begin{frame}\frametitle{証明$(\Leftarrow)$のスケッチ}
@@ -613,6 +650,30 @@ def sums_of_two_squares(p):
 \end{block}
 
 \end{frame}
+
+\begin{frame}\frametitle{証明のスケッチ}
+
+\begin{lemma}
+\begin{equation*}
+(u^{2} + v^{2})(A^{2}+B^{2}) = (uA+vB)^{2} + (vA-uB)^{2}
+\end{equation*}
+\end{lemma}
+
+\begin{proof}[証明]
+計算するだけ。
+\begin{equation*} 
+\begin{split}
+&(uA+vB)^{2} + (vA-uB)^{2}  \\
+&= (u^{2}A^{2} + 2uAvB + v^{2}B^{2}) + (v^{2}A^{2}-2vAuB + u^{2}B^{2})  \\
+ &= u^{2}A^{2}+v^{2}B^{2} + v^{2}A^{2}+u^{2}B^{2} \\
+ &= (u^{2} + v^{2})(A^{2}+B^{2}).
+ \end{split}
+\end{equation*}
+
+\end{proof}
+
+\end{frame}
+
 
 \begin{frame}[fragile]\frametitle{総仕上げ}
 \begin{block}{2つの方程式}
