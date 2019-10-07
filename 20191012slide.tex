@@ -81,7 +81,8 @@
 
 \begin{block}{技術書の査読}
 \begin{itemize}
-\item 『Effective Python』（オライリージャパン）など
+\item 『Effective Python』（オライリージャパン）
+\item 『NumPyによるデータ分析入門』（オライリージャパン）など
 \item \url{https://xaro.hatenablog.jp/}に一覧あります。
 \end{itemize}
 \end{block}
@@ -404,54 +405,58 @@ for t, s in filter(
 
 \section{2つの平方数の和で表せる素数}
 
-\begin{frame}\frametitle{ピタゴラス数（復習）}
-
-\begin{definition}[ピタゴラス数]
-$a^{2} + b^{2} = c^{2}$が成り立つ自然数の組$(a, b, c)$をピタゴラス数と呼ぶ。
-\end{definition}
-
-\begin{definition}[既約ピタゴラス数]
-互いに素であるピタゴラス数を既約ピタゴラス数と呼ぶ。
-\end{definition}
-
+\begin{frame}\frametitle{Pythonで楽しむ初等整数論}
+\huge{定理の証明からPythonでプログラミングしてみよう}
 \end{frame}
 
-\begin{frame}[fragile]\frametitle{既約ピタゴラス数の斜辺の性質}
-
-\begin{block}{既約ピタゴラス数の斜辺を4で割ると...?}
-\begin{pyverbatim}
-from itertools import combinations
-from math import gcd
-
-for t, s in filter(
-    lambda x: gcd(*x) == 1,
-    combinations(range(1, 10, 2), r=2),
-):
-    c = int((s ** 2 + t ** 2) / 2)
-    print(f"{c} を4で割った余りは{c % 4}")
-\end{pyverbatim}
-\end{block}
-
-\end{frame}
-
-\begin{frame}[fragile]\frametitle{既約ピタゴラス数の斜辺の性質}
-
-\begin{block}{既約ピタゴラス数の斜辺を4で割ると...?}
-\begin{pycode}
-from itertools import combinations
-from math import gcd
-
-for t, s in filter(
-    lambda x: gcd(*x) == 1,
-    combinations(range(1, 10, 2), r=2),
-):
-    c = int((s ** 2 + t ** 2) / 2)
-    print(f"{c} を4で割った余りは{c % 4}")
-    print()
-\end{pycode}
-\end{block}
-
-\end{frame}
+%\begin{frame}\frametitle{ピタゴラス数（復習）}
+%
+%\begin{definition}[ピタゴラス数]
+%$a^{2} + b^{2} = c^{2}$が成り立つ自然数の組$(a, b, c)$をピタゴラス数と呼ぶ。
+%\end{definition}
+%
+%\begin{definition}[既約ピタゴラス数]
+%互いに素であるピタゴラス数を既約ピタゴラス数と呼ぶ。
+%\end{definition}
+%
+%\end{frame}
+%
+%\begin{frame}[fragile]\frametitle{既約ピタゴラス数の斜辺の性質}
+%
+%\begin{block}{既約ピタゴラス数の斜辺を4で割ると...?}
+%\begin{pyverbatim}
+%from itertools import combinations
+%from math import gcd
+%
+%for t, s in filter(
+%    lambda x: gcd(*x) == 1,
+%    combinations(range(1, 10, 2), r=2),
+%):
+%    c = int((s ** 2 + t ** 2) / 2)
+%    print(f"{c} を4で割った余りは{c % 4}")
+%\end{pyverbatim}
+%\end{block}
+%
+%\end{frame}
+%
+%\begin{frame}[fragile]\frametitle{既約ピタゴラス数の斜辺の性質}
+%
+%\begin{block}{既約ピタゴラス数の斜辺を4で割ると...?}
+%\begin{pycode}
+%from itertools import combinations
+%from math import gcd
+%
+%for t, s in filter(
+%    lambda x: gcd(*x) == 1,
+%    combinations(range(1, 10, 2), r=2),
+%):
+%    c = int((s ** 2 + t ** 2) / 2)
+%    print(f"{c} を4で割った余りは{c % 4}")
+%    print()
+%\end{pycode}
+%\end{block}
+%
+%\end{frame}
 
 
 \begin{frame}\frametitle{2つの平方数の和で表せる素数}
@@ -475,17 +480,17 @@ p = x^{2}+y^{2} = (2m)^{2} + (2n + 1)^{2} = 4(m^{2} + n^{2} + n) + 1
 
 \begin{frame}\frametitle{証明のスケッチ}
 
-\begin{proof}[証明$(\Leftarrow)$のスケッチ]
+\begin{block}{証明$(\Leftarrow)$のスケッチ}
 
 \begin{itemize}
 \item $p$を4を法として1と合同な素数とする。
 \item いい感じに$A^{2}+B^{2} = Mp$なる$(A, B, M)$を探す。
-\item $(A, B, M)$からいい感じに$a^{2}+b^{2}=mp, m \leq M-1$なる$(a, b, m)$を探す。
+\item $(A, B, M)$からいい感じに$a^{2}+b^{2}=Mr, r \leq M-1$なる$(a, b, r)$を探す。
 \item $M$が1になるまで繰り返す。
 \end{itemize}
 
-\end{proof}
-
+\end{block}
+これを無限降下法と呼ぶ。
 \end{frame}
 
 \begin{frame}\frametitle{証明$(\Leftarrow)$のスケッチ}
@@ -497,7 +502,7 @@ p = x^{2}+y^{2} = (2m)^{2} + (2n + 1)^{2} = 4(m^{2} + n^{2} + n) + 1
 \end{lemma}
 
 \begin{proof}[証明]
-
+計算するだけ。
 \begin{equation*} 
 \begin{split}
 &(uA+vB)^{2} + (vA-uB)^{2}  \\
@@ -626,6 +631,8 @@ a^{2} + b^{2} &= Mr
  \end{split}
 \end{equation*}
 \end{block}
+
+$\displaystyle r \leq \frac{M}{2}$なので、効率よく計算できる。
 
 \end{frame}
 
