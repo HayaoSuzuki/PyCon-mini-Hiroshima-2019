@@ -553,7 +553,7 @@ p = x^{2}+y^{2} = (2m)^{2} + (2n + 1)^{2} = 4(m^{2} + n^{2} + n) + 1
 これを無限降下法と呼ぶ。
 \end{frame}
 
-\begin{frame}\frametitle{証明$(\Leftarrow)$のスケッチ}
+\begin{frame}\frametitle{証明のスケッチ}
 
 \begin{lemma}
 合同方程式$x^{2} \equiv -1 \pmod{p}$は解を持つ。
@@ -570,7 +570,7 @@ p = x^{2}+y^{2} = (2m)^{2} + (2n + 1)^{2} = 4(m^{2} + n^{2} + n) + 1
 
 \end{frame}
 
-\begin{frame}[fragile]\frametitle{いい感じに$A^{2}+B^{2} = Mp$なる$(A, B, M)$を探す}
+\begin{frame}[fragile]\frametitle{$A^{2}+B^{2} = Mp$なる$(A, B, M)$を探す}
 
 \begin{block}{合同方程式$x^{2} \equiv -1 \pmod{p}$の解を算出する（天下り）}
 \begin{pyverbatim}
@@ -591,9 +591,9 @@ def solve_quadratic(p):
 
 \end{frame}
 
-\begin{frame}[fragile]\frametitle{いい感じに$A^{2}+B^{2} = Mp$なる$(A, B, M)$を探す}
+\begin{frame}[fragile]\frametitle{$A^{2}+B^{2} = Mp$なる$(A, B, M)$を探す}
 
-\begin{block}{いい感じに$(A, B, M)$を探す}
+\begin{block}{$(A, B, M)$を探す}
 \begin{pyverbatim}
 def sums_of_two_squares(p):
     """4を法として1と合同な素数を2つの平方数の和で表す"""
@@ -608,9 +608,9 @@ def sums_of_two_squares(p):
 
 \end{frame}
 
-\begin{frame}[fragile]\frametitle{いい感じに$a^{2}+b^{2}=mp$を探す}
+\begin{frame}[fragile]\frametitle{$a^{2}+b^{2}=Mr$を探す}
 
-\begin{block}{いい感じに$a^{2}+b^{2}=Mr$を探す}
+\begin{block}{$a^{2}+b^{2}=Mr$を探す}
 以下の条件を満たすように$a, b$を選ぶ。
 \begin{align*} 
 a &\equiv A \pmod{M} \\ 
@@ -627,9 +627,9 @@ r = \frac{a^{2} + b^{2}}{M} \leq \frac{\left (\frac{M}{2} \right)^{2} + \left (\
 
 \end{frame}
 
-\begin{frame}[fragile]\frametitle{いい感じに$a^{2}+b^{2}=Mr$を探す}
+\begin{frame}[fragile]\frametitle{$a^{2}+b^{2}=Mr$を探す}
 
-\begin{block}{いい感じに$a^{2}+b^{2}=Mr$を探す}
+\begin{block}{$a^{2}+b^{2}=Mr$を探す}
 \begin{pyverbatim}
 from sympy.ntheory.modular import solve_congruence
 
