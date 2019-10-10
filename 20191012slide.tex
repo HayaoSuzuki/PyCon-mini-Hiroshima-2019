@@ -36,7 +36,7 @@
 \usepackage[T1]{fontenc}%8bit フォント
 \usepackage{textcomp}%欧文フォントの追加
 \usepackage[utf8]{inputenc}%文字コードをUTF-8
-\usepackage{otf}%otfパッケージ
+\usepackage[deluxe]{otf}%otfパッケージ
 \usepackage{lxfonts}%数式・英文ローマン体を Lxfont にする
 \usepackage{bm}%数式太字
 %%%%%%%%%%
@@ -109,7 +109,7 @@
 \end{block}
 
 \begin{alertblock}{初等だから簡単ですね？よかった！}
-初等とは予備知識がいらないという意味であり決して簡単ではありません。
+初等とは特別な予備知識がいらないこと。
 \end{alertblock}
 
 \end{frame}
@@ -143,10 +143,6 @@
 \end{itemize}
 \end{block}
 
-\begin{exampleblock}{でも...難しいんでしょう？}
-割り算ができれば大丈夫！（個人差があります）
-\end{exampleblock}
-
 \end{frame}
 
 \section{ピタゴラス数}
@@ -154,19 +150,6 @@
 \begin{frame}\frametitle{Pythonで楽しむ初等整数論}
 \huge{定理の結果をPythonでプログラミングしてみよう}
 \end{frame}
-
-%\begin{frame}\frametitle{ピタゴラスの定理}
-%
-%\begin{theorem}[Pythagoras]
-%直角三角形の斜辺の長さを$c$とし、それ以外の辺の長さを$a, b$とする。
-%そのとき、
-%\begin{equation*}
-%a^{2} + b^{2} = c^{2}
-%\end{equation*}
-% が成り立つ。
-%\end{theorem}
-%
-%\end{frame}
 
 \begin{frame}\frametitle{ピタゴラス数}
 
@@ -217,28 +200,13 @@ for a, b, c in product(range(1, 20), repeat=3):
 互いに素であるピタゴラス数を既約ピタゴラス数と呼ぶ。
 \end{definition}
 
-\begin{exampleblock}{既約ピタゴラス数だけを生成すれば他のピタゴラス数は作れる！}
-ピタゴラス数$(3, 4, 5)$から別のピタゴラス数$(6, 8, 10)$を作ることができる
+\begin{exampleblock}{既約ピタゴラス数だけを生成すれば他のピタゴラス数は生成できる。}
+ピタゴラス数$(3, 4, 5)$から別のピタゴラス数$(6, 8, 10)$を作ることができる。
 \end{exampleblock}
 
 \begin{block}{次なる目標}
 既約ピタゴラス数を重複なく、もれなく計算したい。
 \end{block}
-
-%\begin{proposition}[ピタゴラス数からピタゴラス数を作る]
-%自然数の組$(a, b, c)$がピタゴラス数ならば、
-%任意の自然数$n$に対して$(na, nb, nc)$もまたピタゴラス数である。
-%\end{proposition}
-%
-%\begin{proof}[証明]
-%\begin{equation*}
-%(na)^{2} + (nb)^{2} = n^{2} (a^{2} + b^{2}) = (nc)^{2}.
-%\end{equation*}
-%\end{proof}
-%
-%\begin{definition}[既約ピタゴラス数]
-%互いに素であるピタゴラス数を既約ピタゴラス数と呼ぶ。
-%\end{definition}
 
 \end{frame}
 
@@ -286,7 +254,9 @@ for a, b, c in combinations(range(1, 50), 3):
 \begin{frame}\frametitle{既約ピタゴラス数をもっと上手く計算しよう}
 
 \begin{proposition}
-互いに素な奇数$s, t (s > t)$対して、 $a = st, b = \displaystyle \frac{s^{2}-t^{2}}{2}, c = \displaystyle \frac{s^{2}+t^{2}}{2}$は既約ピタゴラス数となる。
+既約ピタゴラス数$(a, b, c)$は互いに素な奇数$s, t (s > t)$を用いて 
+$a = st, b = \displaystyle \frac{s^{2}-t^{2}}{2}, c = \displaystyle \frac{s^{2}+t^{2}}{2}$
+とできる。
 \end{proposition}
 
 \begin{exampleblock}{つまり...}
@@ -355,7 +325,9 @@ $c-b, c+b$は互いに素であり、かつ$(c-b)(c+b)=a^{2}$なので、$(c-b)(
 \begin{frame}\frametitle{既約ピタゴラス数をもっと上手く計算しよう}
 
 \begin{proposition}
-互いに素な奇数$s, t (s > t)$対して、 $a = st, b = \displaystyle \frac{s^{2}-t^{2}}{2}, c = \displaystyle \frac{s^{2}+t^{2}}{2}$は既約ピタゴラス数となる。
+既約ピタゴラス数$(a, b, c)$は互いに素な奇数$s, t (s > t)$を用いて 
+$a = st, b = \displaystyle \frac{s^{2}-t^{2}}{2}, c = \displaystyle \frac{s^{2}+t^{2}}{2}$
+とできる。
 \end{proposition}
 
 \begin{proof}[証明（あとでじっくり読もう）]
@@ -443,57 +415,12 @@ for t, s in filter(
 \huge{定理の証明からPythonでプログラミングしてみよう}
 \end{frame}
 
-%\begin{frame}\frametitle{ピタゴラス数（復習）}
-%
-%\begin{definition}[ピタゴラス数]
-%$a^{2} + b^{2} = c^{2}$が成り立つ自然数の組$(a, b, c)$をピタゴラス数と呼ぶ。
-%\end{definition}
-%
-%\begin{definition}[既約ピタゴラス数]
-%互いに素であるピタゴラス数を既約ピタゴラス数と呼ぶ。
-%\end{definition}
-%
-%\end{frame}
-%
-%\begin{frame}[fragile]\frametitle{既約ピタゴラス数の斜辺の性質}
-%
-%\begin{block}{既約ピタゴラス数の斜辺を4で割ると...?}
-%\begin{pyverbatim}
-%from itertools import combinations
-%from math import gcd
-%
-%for t, s in filter(
-%    lambda x: gcd(*x) == 1,
-%    combinations(range(1, 10, 2), r=2),
-%):
-%    c = int((s ** 2 + t ** 2) / 2)
-%    print(f"{c} を4で割った余りは{c % 4}")
-%\end{pyverbatim}
-%\end{block}
-%
-%\end{frame}
-%
-%\begin{frame}[fragile]\frametitle{既約ピタゴラス数の斜辺の性質}
-%
-%\begin{block}{既約ピタゴラス数の斜辺を4で割ると...?}
-%\begin{pycode}
-%from itertools import combinations
-%from math import gcd
-%
-%for t, s in filter(
-%    lambda x: gcd(*x) == 1,
-%    combinations(range(1, 10, 2), r=2),
-%):
-%    c = int((s ** 2 + t ** 2) / 2)
-%    print(f"{c} を4で割った余りは{c % 4}")
-%    print()
-%\end{pycode}
-%\end{block}
-%
-%\end{frame}
-
-
 \begin{frame}\frametitle{2つの平方数の和で表せる素数}
+
+\begin{definition}[整数の合同]
+整数$a, b$および$m$において、$a-b$が$m$の倍数となるとき、$a, b$はを$m$を法として合同と呼び、
+$a \equiv b \pmod{m}$と表す。
+\end{definition}
 
 \begin{theorem}[Fermatの2平方和定理]
 奇素数$p$が2つの平方数の和で表せることの必要十分条件は$p \equiv 1 \pmod{4}$である。
